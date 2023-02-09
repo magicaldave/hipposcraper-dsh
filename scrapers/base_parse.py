@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """Module for BaseParse"""
 from scrapers import *
 
@@ -40,7 +40,7 @@ class BaseParse(object):
         valid_link = "intranet.hbtn.io/projects"
         while not (valid_link in value):
             print("[ERROR] Invalid link (must be to project on intranet.hbtn.io)")
-            value = raw_input("Enter link to project: ")
+            value = input("Enter link to project: ")
         self.__htbn_link = value
 
     def get_json(self):
@@ -66,7 +66,7 @@ class BaseParse(object):
             soup (obj): BeautifulSoup parsed html object
         """
         login = "https://intranet.hbtn.io/auth/sign_in"
-        cj = cookielib.CookieJar()
+        cj = CookieJar()
         br = mechanize.Browser()
 
         sys.stdout.write("  -> Logging in... ")
