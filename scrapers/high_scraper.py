@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """Module for HighScraper"""
 from scrapers import *
 
@@ -68,7 +68,7 @@ class HighScraper:
                 find_dir_file = re.search('/(.+?)$', text_file)
                 if find_dir_file is not None:
                     new_dir_files.append(str(find_dir_file.group(1)))
-                if find_folder is not None and one_dir_check is 0:
+                if find_folder is not None and one_dir_check == 0:
                     folder_name = str(find_folder.group(1))
                     os.mkdir(folder_name)
                     one_dir_check += 1
@@ -78,7 +78,7 @@ class HighScraper:
                     create_name = str(find_comma.group(1))
                     make_comma = open(create_name, "w+")
                     make_comma.close()
-                elif "." not in text_file and one_dir_check is not 1:
+                elif "." not in text_file and one_dir_check != 1:
                     os.mkdir(text_file)
                 else:
                     w_file_name = open(text_file, "w+")
@@ -112,7 +112,7 @@ class HighScraper:
                 pass
 
         # Check if new dir created, insert files if there is
-        if folder_name is not None and one_dir_check is 1:
+        if folder_name is not None and one_dir_check == 1:
             os.chdir(folder_name)
             for item in new_dir_files:
                 if "," in item:
