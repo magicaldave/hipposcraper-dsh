@@ -3,6 +3,6 @@
 #   The first argument provided to the script is expected to be a
 #+  link to a Holberton School project.
 
-project=$1
-python2 ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/hippoproject.py "$project"
-python2 ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/hipporead.py "$project"
+PROJECT="$1"
+python3 /home/s3kshun-8/GitHub/hipposcraper/hippoproject.py "$PROJECT"
+python3 /home/s3kshun-8/GitHub/hipposcraper/hipporead.py "$PROJECT"
