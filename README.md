@@ -4,7 +4,7 @@
 ### [STATUS] This repo is no longer maintained by [Derrick Gee](https://github.com/kai-dg) and [Brennan D Baraban](https://github.com/bdbaraban) starting 6/22/2019, please ask around or on the Holberton Slack to find someone who is maintaining a fork of this repo if you are looking for an updated version of this scraper.
 
 <p align="center">
-  <img src="http://www.holbertonschool.com/holberton-logo.png">
+  <img src="https://uploads-ssl.webflow.com/6105315644a26f77912a1ada/611d35a53693d2436a280488_607774d74f86e77c058d9f4c_favicon.ico">
 </p>
 
 The Hipposcraper automates file template creation for Holberton projects. The 
