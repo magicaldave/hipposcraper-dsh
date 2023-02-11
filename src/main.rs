@@ -5,11 +5,52 @@ use std::env;
 use std::fs;
 use std::io::{BufReader, Read};
 use std::os::unix::fs::PermissionsExt;
+// setup
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::prelude::*;
+use std::path::Path;
+extern crate serde_json;
 
 fn main() {
     get_args();
     set_permissions();
-    println!("Hello, world!");
+    create_dictionary();
+}
+fn read_input() -> String {
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    input.trim().to_string()
+}
+
+fn create_dictionary() -> HashMap<String, String> {
+    let mut dictionary: HashMap<String, String> = HashMap::new();
+    let path = "auth_data.json";
+    let keys = ["intra_user_key", "intra_pass_key", "author_name", "github_user", "github_profile"];
+    let prompts = [
+        "Enter Your Intranet Username:",
+        "Enter Your Intranet Password:",
+        "Enter Your Full Name:",
+        "Enter Your Github Username:",
+        "Enter Your GitHub Profile Link:",
+    ];
+    if !Path::new(path).exists() {
+	 for (key, prompt) in keys.iter().zip(prompts.iter()) {
+             println!("{}", prompt);
+             let input = read_input();
+             dictionary.insert(key.to_string(), input);
+	 }
+	 let json = serde_json::to_string(&dictionary).unwrap();
+
+	 let mut file = File::create("auth_data.json").unwrap();
+	 file.write_all(json.as_bytes()).unwrap();
+	 println!("Data written to auth_data.json");
+     } else {
+	 let file2 = fs::read_to_string(path).unwrap();
+	 dictionary =  serde_json::from_str(&file2).unwrap();
+     }
+
+    dictionary
 }
 
 fn get_args() -> String {
@@ -51,7 +92,7 @@ pub fn set_permissions() {
         };
 
         if metadata.len() == 0 {
-	    println!("  -> NOTE: File is empty: {}", entry.path().display());
+	    println!("       -> NOTE: File is not the correct type for X permissions: {}", entry.path().display());
             continue;
         }
 
@@ -71,8 +112,9 @@ pub fn set_permissions() {
 		continue;
 	    }
 	};
+
 	if &buf == b"#!" {
-	    println!("  -> Setting permissions on {}", entry.path().display());
+	    println!("     -> Setting permissions on {}", entry.path().display());
 	    let mut perms = match fs::metadata(&path) {
 		Ok(metadata) => metadata.permissions(),
 		Err(err) => {
@@ -86,7 +128,7 @@ pub fn set_permissions() {
 		Err(err) => println!("     [ERROR] Failed to set permissions: {}", err),
 	    }
 	} else {
-	    println!("       -> File has no business with X perms: {}", entry.path().display())
+	    println!("       -> File doesn't need X: {}", entry.path().display())
 	}
     }
     println!("done");
