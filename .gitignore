@@ -1,3 +1,4 @@
 auth_data.json
 scrapers/*.pyc
 __pycache__/
+/target/
